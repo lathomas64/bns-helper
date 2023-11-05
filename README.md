@@ -6,4 +6,17 @@ npx create-expo-app rps
 cd rps
 npx expo start
 
-npm install -g expo-cli
+npm install -g eas-cli
+
+
+# deploy
+npm run deploy
+
+# start local
+npx expo start
+
+# generate an apk
+eas build --profile development --platform android
+
+# expo docs
+https://docs.expo.dev/

@@ -1,49 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, Text, View, Button, Alert} from 'react-native';
-
-
+import { useState} from 'react';
+import { StyleSheet, Text, View, Button, Alert, Linking} from 'react-native';
+import Character from './components/Character.js';
 
 
 
 export default function App() {
     const [chopResult, setChop] = useState('N/A');//need a better name for this variable then value
-    const [blood, setBlood] = useState(12);
-    const [willpower, setWillpower] = useState(6);
-    const [health, setHealth] = useState(9);
-    const maxHealth = 9;
-    const maxBlood = 12;
-    const maxWillpower = 6;
+    const chop_chart = { 1: "Rock", 2: "Paper", 3: "Scissors" };
 
     function random_chop() {
         let result = Math.ceil(Math.random() * 3);
-        switch (result) {
-            case 1:
-                setChop("Rock");
-                Alert.alert(chopResult);
-                break;
-            case 2:
-                setChop("Paper");
-                break;
-            case 3:
-                setChop("Scissors");
-                break;
-        }
-        
+        setChop(chop_chart[result]);
+        Alert.alert(chop_chart[result]);
     }
+
   return (
-    <View style={styles.container}>
+      <View style={styles.container}>
           <Text>{chopResult}</Text>
-          <Button title="chop!" onPress={random_chop}/>
-          <Text>Blood {blood}/{maxBlood }</Text>
-          <Button title="spend blood" onPress={() => setBlood(blood - 1) }/>
-          <Button title="feed" onPress={() => setBlood(maxBlood) }/>
-          <Text>Willpower {willpower}/{maxWillpower}</Text>
-          <Button title="spend willpower" onPress={() => setWillpower(willpower - 1) }/>
-          <Button title="refresh willpower" onPress={() => setWillpower(maxWillpower)} />
-          <Text>Health {health}/{maxHealth}</Text>
-          <Button title="take damage" onPress={() => setHealth(health - 1)} />
-          <Button title="heal" onPress={() => setHealth(Math.min(health + 1, maxHealth))} />
+          <Button title="chop!" onPress={random_chop} />
+          <Character />
+
+          <Text> </Text>
+          <Button title="More info" onPress={() => Linking.openURL("https://vamp.bynightstudios.com/")}/>
       <StatusBar style="auto" />
     </View>
   );
