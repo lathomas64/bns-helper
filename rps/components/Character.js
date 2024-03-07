@@ -12,6 +12,7 @@ class Character extends React.Component {
             Health: 9,
             maxWillpower: 6,
             Willpower: 6,
+            activeTab: "resources",
             "Beast Traits": 0,
             "Derangement Traits": 0,
             name: "Daria Gray"
@@ -33,26 +34,41 @@ class Character extends React.Component {
             <Text>{props.name} {this.state[props.name]}/{props.maxValue}<Button title="-" onPress={() => decrease()} />
                 <Button title="+" onPress={() => increase()} /></Text>
         </View>
-    );
-}
+        );
+
+        
+    }
+    Tab = (props) => {
+        if (props.active == props.name) {
+            return (<View>{props.children}</View>);
+        }
+    }
     render() {
         return (<View>
             <Text>{this.state.name}</Text>
-            <this.Resource name="Blood" self={this} state={this.state} maxValue={this.state.maxBlood}/>
-            <this.Resource name="Willpower" self={this} state={this.state} maxValue={this.state.maxWillpower} />
-            <this.Resource name="Health" self={this} state={this.state} maxValue={this.state.maxHealth} />
-            <this.Resource name="Beast Traits" self={this} state={this.state} maxValue="1000" />
-            <this.Resource name="Derangement Traits" self={this} state={this.state} maxValue="3" />
-            <Text>Mental Defense = {10 + this.state.Willpower}</Text>
-            <Text>Social Defense = {10 + this.state.Willpower}</Text>
-            <Text>Dodge = 21 (free retest)</Text>
-            <Text>Initiative = 20</Text>
-            <Text>Melee 19 (accurate sword)</Text>
-            <Text> Convert 2 agg, soak 1 normal</Text>
-            <Text> 3 actions/turn</Text>
-            <Text>2 blood/turn</Text>
-            <Text>No willpower: Burst of Speed, Quick Draw, Pierce the Heart.</Text>
-            <Text>Dont take up physical slot: Blinding Attack, Disarm, Knockdown.</Text>
+            <View style={{ flexDirection: "row", justifyContent: "center" }} >
+                <Button style={{ "max-width": "100px"}} title="Resources" onPress={() => { this.setState({ "activeTab": "resources" }) }} />
+                <Button style={{ "max-width": "100px" }} title="Combat" onPress={() => { this.setState({ "activeTab": "combat" }) }} />
+            </View>
+            <this.Tab name="resources" active={this.state.activeTab}>
+                <this.Resource name="Blood" self={this} state={this.state} maxValue={this.state.maxBlood} />
+                <this.Resource name="Willpower" self={this} state={this.state} maxValue={this.state.maxWillpower} />
+                <this.Resource name="Health" self={this} state={this.state} maxValue={this.state.maxHealth} />
+                <this.Resource name="Beast Traits" self={this} state={this.state} maxValue="1000" />
+                <this.Resource name="Derangement Traits" self={this} state={this.state} maxValue="3" />
+            </this.Tab>
+            <this.Tab name="combat" active={this.state.activeTab}>
+                <Text>Mental Defense = {10 + this.state.Willpower}</Text>
+                <Text>Social Defense = {10 + this.state.Willpower}</Text>
+                <Text>Dodge = 21 (free retest)</Text>
+                <Text>Initiative = 20</Text>
+                <Text>Melee 19 (accurate sword)</Text>
+                <Text> Convert 2 agg, soak 1 normal</Text>
+                <Text> 3 actions/turn</Text>
+                <Text>2 blood/turn</Text>
+                <Text>No willpower: Burst of Speed, Quick Draw, Pierce the Heart.</Text>
+                <Text>Dont take up physical slot: Blinding Attack, Disarm, Knockdown.</Text>
+            </this.Tab>
             </View>);
     }
 }

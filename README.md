@@ -20,3 +20,4 @@ eas build --profile development --platform android
 
 # expo docs
 https://docs.expo.dev/
+https://reactnative.dev
